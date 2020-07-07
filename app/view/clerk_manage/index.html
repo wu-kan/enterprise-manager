@@ -1,0 +1,103 @@
+{include file="public/head" /}
+<div class="menu" id="menu">
+        <div class="layui-collapse" lay-accordion>
+            
+
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><a href="/index.php/ConfirmForRegist/get_list">确认员工注册</a></h2>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><a href="/index.php/DepartmentManage/index">部门组织管理</a></h2>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">岗位信息管理</h2>
+            </div>
+        </div>
+    </div>
+<div class="main" style="padding:10px;">
+    <div class="content">
+        <span>职工列表</span>
+        <button class="layui-btn layui-btn-sm" onclick="add()">添加</button>
+        <div></div>
+    </div>
+    <form class="layui-form">
+        <div class="layui-form-item" style="margin-top:10px;">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+    </form>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>住址</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>部门</th>
+                <th>年薪</th>
+                <th>奖金</th>
+                <th>权限级别</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="right" id="right_v"}
+                <tr>
+                    <td>{$right_v.id}</td>
+                    <td>{$right_v.name}</td>
+                    <td>{$right_v.gender}</td>
+                    <td>{$right_v.age}</td>
+                    <td>{$right_v.address}</td>
+                    <td>{$right_v.phone}</td>
+                    <td>{$right_v.email}</td>
+                    <td>{$right_v.department}</td>
+                    <td>{$right_v.wage}</td>
+                    <td>{$right_v.bonus}</td>
+                    <td>{$right_v.authority}</td>
+                    <td>
+                        <button class="layui-btn layui-btn-xs" onclick="edit({$right_v.id})">编辑</button>
+                        <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="del({$right_v.id})">删除</button>
+                    </td>
+                </tr>
+            {/volist}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    function add(){
+        layer.open({
+            type: 2,
+            title: '添加',
+            shade: 0.3,
+            area: ['480px', '440px'],
+            content: '/index.php/ClerkManage/add'
+        });
+    }
+    function edit(id){
+        layer.open({
+            type: 2,
+            title: '修改',
+            shade: 0.3,
+            area: ['480px', '440px'],
+            content: '/index.php/ClerkManage/modify?id='+id
+        });
+    }
+    function del(id){
+        layer.confirm('确定要删除吗？', {
+            icon:3,
+            btn: ['确定','取消']
+        }, function(){
+            $.post('/index.php/ClerkManage/delete',{'id':id},function(res){
+                if(res.code>0){
+                    layer.alert(res.msg,{icon:2});
+                }else{
+                    layer.msg(res.msg);
+                    setTimeout(function(){window.location.reload();},1000);
+                }
+            },'json');
+        });
+    }
+</script>
+{include file="public/bottom" /}

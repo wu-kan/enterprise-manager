@@ -1,0 +1,72 @@
+{include file="public/head" /}
+<div class="menu" id="menu">
+        <div class="layui-collapse" lay-accordion>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">确认员工注册</h2>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><a href="/index.php/DepartmentManage/index">部门组织管理</a></h2>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title"><a href="/index.php/ClerkManage/index">岗位信息管理</a></h2>
+            </div>
+        </div>
+    </div>
+<div class="main" style="padding:10px;">
+    <div class="content">
+        <span>未确认注册名单</span>
+        <div></div>
+    </div>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>住址</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>部门</th>
+                <th>年薪</th>
+                <th>奖金</th>
+                <th>权限级别</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="candidate_clerk" id="candidate_clerk_v"}
+                <tr>
+                    <td>{$candidate_clerk_v.id}</td>
+                    <td>{$candidate_clerk_v.name}</td>
+                    <td>{$candidate_clerk_v.gender}</td>
+                    <td>{$candidate_clerk_v.age}</td>
+                    <td>{$candidate_clerk_v.address}</td>
+                    <td>{$candidate_clerk_v.phone}</td>
+                    <td>{$candidate_clerk_v.email}</td>
+                    <td>{$candidate_clerk_v.department}</td>
+                    <td>{$candidate_clerk_v.wage}</td>
+                    <td>{$candidate_clerk_v.bonus}</td>
+                    <td>{$candidate_clerk_v.authority}</td>
+                    <td>
+                        <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="confirm({$candidate_clerk_v.id})">确认</button>
+                    </td>
+                </tr>
+            {/volist}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    function confirm(id){
+        $.post('/index.php/ConfirmForRegist/confirm',{'id':id},function(res){
+            if(res.code==0){ 
+                layer.alert(res.msg,{icon:2});
+            }
+            else {
+                layer.msg(res.msg);
+                setTimeout(function(){parent.window.location.reload();},1000);
+            }
+        },'json');
+    }
+</script>
+{include file="public/bottom" /}

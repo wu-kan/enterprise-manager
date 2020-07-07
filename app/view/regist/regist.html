@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/static/layui/css/layui.css">
+    <script type="text/javascript" src="/static/layui/layui.js"></script>
+</head>
+<body style="padding:10px;">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">姓名</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="name" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">密码</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="password" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="gender" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年龄</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="age" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">住址</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="address" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="phone" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">邮箱</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="email" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">部门</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="department" value="">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">年薪</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="wage" value="0" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">奖金</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="bonus" value="0" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限级别</label>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" name="authority" value="0" readonly="readonly">
+            </div>
+        </div>
+    </form>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" onclick="submit()">提交</button>
+        </div>
+    </div>
+    <script type="text/javascript">
+        layui.use(['layer','form'],function(){
+            form = layui.form;
+            layer = layui.layer;
+            $ = layui.jquery;
+        });
+        function submit(){
+            $.post('/index.php/regist/regist',$('form').serialize(),function(res){
+                if(res.code==0){ // 部门不存在
+                    layer.alert(res.msg,{icon:2});
+                }
+                else if(res.code==2){   // 注册提交失败
+                    layer.msg(res.msg);
+                }
+                else{   // 注册提交成功
+                    layer.msg(res.msg);
+                    setTimeout(function(){parent.window.location.reload();},1000);;
+                }    
+            },'json');
+        }
+    </script>
+</body>
+</html>

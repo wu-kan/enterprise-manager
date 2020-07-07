@@ -1,0 +1,61 @@
+{include file="public/head" /}
+<div class="menu" id="menu">
+        <div class="layui-collapse" lay-accordion>
+            
+
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">查看岗位信息</h2>
+            </div>
+
+        </div>
+    </div>
+<div class="main" style="padding:10px;">
+    <div class="content">
+        <span>职工列表</span>
+        <div></div>
+    </div>
+    <form class="layui-form">
+        <div class="layui-form-item" style="margin-top:10px;">
+            <button class="layui-btn layui-btn-primary"><i class="layui-icon">&#xe615;</i>搜索</button>
+        </div>
+    </form>
+    <table class="layui-table">
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>年龄</th>
+                <th>住址</th>
+                <th>电话</th>
+                <th>邮箱</th>
+                <th>部门</th>
+                <th>年薪</th>
+                <th>奖金</th>
+                <th>权限级别</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {volist name="right" id="right_v"}
+                <tr>
+                    <td>{$right_v.id}</td>
+                    <td>{$right_v.name}</td>
+                    <td>{$right_v.gender}</td>
+                    <td>{$right_v.age}</td>
+                    <td>{$right_v.address}</td>
+                    <td>{$right_v.phone}</td>
+                    <td>{$right_v.email}</td>
+                    <td>{$right_v.department}</td>
+                    <td>{$right_v.wage}</td>
+                    <td>{$right_v.bonus}</td>
+                    <td>{$right_v.authority}</td>
+                </tr>
+            {/volist}
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">
+    
+</script>
+{include file="public/bottom" /}
